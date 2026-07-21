@@ -1,0 +1,46 @@
+{
+  "app": {
+    "brand": "イコノイジョイ Song Ranker",
+    "tagline": "好きな曲を、一対一で並べる。",
+    "home": "ホーム",
+    "leaveConfirm": "ランキングの途中です。ホームに戻りますか？進捗は失われます。"
+  },
+  "setup": {
+    "title": "ランキングをはじめる",
+    "groups": "グループを選ぶ",
+    "scope": "曲の範囲",
+    "titleOnly": "表題曲のみ",
+    "fullList": "全曲（カップリング含む）",
+    "selectedCount": "{{count}} 曲",
+    "modeHintTopK": "トップ{{topK}}の完全順位",
+    "estimate": "想定比較回数: 約 {{count}} 回",
+    "start": "スタート",
+    "needGroup": "グループを1つ以上選んでください",
+    "needSongs": "曲が2曲以上必要です"
+  },
+  "compare": {
+    "question": "どっちが好き？",
+    "progress": "{{done}} / {{total}}",
+    "modeTopK": "トップ{{topK}}完全順位モード",
+    "titleBadge": "表題曲",
+    "undo": "ひとつ戻る",
+    "playMv": "MVを再生",
+    "pickThis": "これに投票",
+    "draw": "引き分け"
+  },
+  "result": {
+    "title": "トップ{{topK}}",
+    "modeTopK": "トップ{{topK}}の完全順位",
+    "again": "もう一度",
+    "shareCopied": "結果をコピーしました"
+  },
+  "groups": {
+    "equalLove": "＝LOVE",
+    "notEqualMe": "≠ME",
+    "nearlyEqualJoy": "≒JOY"
+  },
+  "lang": {
+    "ja": "日本語",
+    "en": "English"
+  }
+}

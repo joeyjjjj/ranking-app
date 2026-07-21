@@ -1,0 +1,46 @@
+{
+  "app": {
+    "brand": "Ikonoi Joy Song Ranker",
+    "tagline": "Rank your favorite songs, one pair at a time.",
+    "home": "Home",
+    "leaveConfirm": "Ranking in progress. Go home? Progress will be lost."
+  },
+  "setup": {
+    "title": "Start ranking",
+    "groups": "Choose groups",
+    "scope": "Song scope",
+    "titleOnly": "Title tracks only",
+    "fullList": "Full list (including couplings)",
+    "selectedCount": "{{count}} songs",
+    "modeHintTopK": "Exact top {{topK}} ranking",
+    "estimate": "Estimated comparisons: ~{{count}}",
+    "start": "Start",
+    "needGroup": "Select at least one group",
+    "needSongs": "Need at least 2 songs"
+  },
+  "compare": {
+    "question": "Which do you prefer?",
+    "progress": "{{done}} / {{total}}",
+    "modeTopK": "Exact top {{topK}} mode",
+    "titleBadge": "Title",
+    "undo": "Undo",
+    "playMv": "Play MV",
+    "pickThis": "Pick this",
+    "draw": "Draw"
+  },
+  "result": {
+    "title": "Your top {{topK}}",
+    "modeTopK": "Exact order among the top {{topK}}",
+    "again": "Rank again",
+    "shareCopied": "Result copied"
+  },
+  "groups": {
+    "equalLove": "=LOVE",
+    "notEqualMe": "≠ME",
+    "nearlyEqualJoy": "≒JOY"
+  },
+  "lang": {
+    "ja": "日本語",
+    "en": "English"
+  }
+}
