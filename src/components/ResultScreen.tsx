@@ -6,27 +6,39 @@ import { YouTubeFrame } from './YouTubeFrame'
 
 type ResultScreenProps = {
   rankedSongs: Song[]
-  canUndo: boolean
-  onUndo: () => void
-  onAgain: () => void
-  onHome: () => void
+  canUndo?: boolean
+  onUndo?: () => void
+  onAgain?: () => void
+  onHome?: () => void
+  onBack?: () => void
+  onDelete?: () => void
+  createdAt?: string
+  hideUndo?: boolean
 }
 
 export function ResultScreen({
   rankedSongs,
-  canUndo,
+  canUndo = false,
   onUndo,
   onAgain,
   onHome,
+  onBack,
+  onDelete,
+  createdAt,
+  hideUndo = false,
 }: ResultScreenProps) {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const topK = rankingConfig.topK
   const [playingSongId, setPlayingSongId] = useState<string | null>(null)
+  const isHistory = Boolean(onBack || onDelete)
 
   const firstPlace = rankedSongs[0]
   const secondPlace = rankedSongs[1]
   const thirdPlace = rankedSongs[2]
   const remainingSongs = rankedSongs.slice(3)
+  const createdLabel = createdAt
+    ? new Date(createdAt).toLocaleString(i18n.language)
+    : null
 
   return (
     <section className="mx-auto w-full max-w-3xl animate-fade-up">
@@ -34,15 +46,20 @@ export function ResultScreen({
         <div>
           <p className="font-display text-4xl text-ink md:text-5xl">{t('result.title', { topK })}</p>
           <p className="mt-2 text-sm text-ink/55">{t('result.modeTopK', { topK })}</p>
+          {createdLabel ? (
+            <p className="mt-1 text-sm text-ink/45">{createdLabel}</p>
+          ) : null}
         </div>
-        <button
-          type="button"
-          onClick={onUndo}
-          disabled={!canUndo}
-          className="rounded-full border border-black/15 px-4 py-2 text-sm text-ink/70 enabled:hover:bg-white disabled:opacity-30"
-        >
-          {t('compare.undo')}
-        </button>
+        {!hideUndo && onUndo ? (
+          <button
+            type="button"
+            onClick={onUndo}
+            disabled={!canUndo}
+            className="rounded-full border border-black/15 px-4 py-2 text-sm text-ink/70 enabled:hover:bg-white disabled:opacity-30"
+          >
+            {t('compare.undo')}
+          </button>
+        ) : null}
       </header>
 
       <div className="space-y-3">
@@ -111,22 +128,49 @@ export function ResultScreen({
         </ol>
       ) : null}
 
-      <div className="mt-8 grid gap-3 sm:grid-cols-2">
-        <button
-          type="button"
-          onClick={onHome}
-          className="rounded-full border border-black/15 bg-white px-6 py-4 text-base font-semibold text-ink transition hover:bg-white/80"
-        >
-          {t('app.home')}
-        </button>
-        <button
-          type="button"
-          onClick={onAgain}
-          className="rounded-full bg-ink px-6 py-4 text-base font-semibold text-white transition hover:bg-ink/90"
-        >
-          {t('result.again')}
-        </button>
-      </div>
+      {isHistory ? (
+        <div className="mt-8 grid gap-3 sm:grid-cols-2">
+          {onBack ? (
+            <button
+              type="button"
+              onClick={onBack}
+              className="rounded-full border border-black/15 bg-white px-6 py-4 text-base font-semibold text-ink transition hover:bg-white/80"
+            >
+              {t('history.back')}
+            </button>
+          ) : null}
+          {onDelete ? (
+            <button
+              type="button"
+              onClick={onDelete}
+              className="rounded-full border border-coral/40 bg-white px-6 py-4 text-base font-semibold text-coral transition hover:bg-coral/10"
+            >
+              {t('history.delete')}
+            </button>
+          ) : null}
+        </div>
+      ) : (
+        <div className="mt-8 grid gap-3 sm:grid-cols-2">
+          {onHome ? (
+            <button
+              type="button"
+              onClick={onHome}
+              className="rounded-full border border-black/15 bg-white px-6 py-4 text-base font-semibold text-ink transition hover:bg-white/80"
+            >
+              {t('app.home')}
+            </button>
+          ) : null}
+          {onAgain ? (
+            <button
+              type="button"
+              onClick={onAgain}
+              className="rounded-full bg-ink px-6 py-4 text-base font-semibold text-white transition hover:bg-ink/90"
+            >
+              {t('result.again')}
+            </button>
+          ) : null}
+        </div>
+      )}
     </section>
   )
 }

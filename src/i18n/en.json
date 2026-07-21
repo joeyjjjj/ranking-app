@@ -34,6 +34,16 @@
     "again": "Rank again",
     "shareCopied": "Result copied"
   },
+  "history": {
+    "title": "History",
+    "subtitle": "Saved ranking results on this device.",
+    "empty": "No ranking records yet.",
+    "missing": "This record could not be found.",
+    "songCount": "{{count}} songs",
+    "back": "Back",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this ranking record?"
+  },
   "groups": {
     "equalLove": "=LOVE",
     "notEqualMe": "≠ME",

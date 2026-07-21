@@ -34,6 +34,16 @@
     "again": "もう一度",
     "shareCopied": "結果をコピーしました"
   },
+  "history": {
+    "title": "履歴",
+    "subtitle": "この端末に保存したランキング結果。",
+    "empty": "まだランキング記録がありません。",
+    "missing": "この記録は見つかりませんでした。",
+    "songCount": "{{count}} 曲",
+    "back": "戻る",
+    "delete": "削除",
+    "deleteConfirm": "このランキング記録を削除しますか？"
+  },
   "groups": {
     "equalLove": "＝LOVE",
     "notEqualMe": "≠ME",

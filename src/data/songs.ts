@@ -28,3 +28,13 @@ export function filterSongs(groupIds: GroupId[], scope: SongScope): Song[] {
 export function countSongs(groupIds: GroupId[], scope: SongScope): number {
   return filterSongs(groupIds, scope).length
 }
+
+export function getSongById(songId: string): Song | undefined {
+  return allSongs.find((song) => song.id === songId)
+}
+
+export function resolveSongsByIds(songIds: string[]): Song[] {
+  return songIds
+    .map((songId) => getSongById(songId))
+    .filter((song): song is Song => song !== undefined)
+}

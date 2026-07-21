@@ -1,19 +1,23 @@
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import { CompareScreen } from './components/CompareScreen'
+import { HistoryDetailScreen } from './components/HistoryDetailScreen'
+import { HistoryListScreen } from './components/HistoryListScreen'
 import { LanguageToggle } from './components/LanguageToggle'
 import { SetupScreen } from './components/SetupScreen'
 import type { Song } from './types/song'
 
-type AppPhase = 'setup' | 'ranking'
+type AppPhase = 'setup' | 'ranking' | 'history' | 'historyDetail'
 
 export default function App() {
   const { t } = useTranslation()
   const [phase, setPhase] = useState<AppPhase>('setup')
   const [selectedSongs, setSelectedSongs] = useState<Song[] | null>(null)
+  const [viewingRecordId, setViewingRecordId] = useState<string | null>(null)
 
   const goHome = () => {
     setSelectedSongs(null)
+    setViewingRecordId(null)
     setPhase('setup')
   }
 
@@ -32,7 +36,18 @@ export default function App() {
     goHome()
   }
 
+  const openHistory = () => {
+    setViewingRecordId(null)
+    setPhase('history')
+  }
+
+  const openRecord = (recordId: string) => {
+    setViewingRecordId(recordId)
+    setPhase('historyDetail')
+  }
+
   const isRanking = phase === 'ranking' && selectedSongs !== null
+  const showHomeButton = phase !== 'setup'
 
   return (
     <div className={`app-shell ${isRanking ? 'h-[100dvh] overflow-hidden md:min-h-screen md:overflow-visible' : 'min-h-screen'}`}>
@@ -48,22 +63,38 @@ export default function App() {
         }`}
       >
         <div className="mb-2 flex shrink-0 items-center justify-between gap-2 md:mb-8">
-          {isRanking ? (
-            <button
-              type="button"
-              onClick={handleHomeClick}
-              className="rounded-full border border-black/15 bg-white/80 px-3 py-1.5 text-xs text-ink/70 hover:bg-white md:px-4 md:py-2 md:text-sm"
-            >
-              {t('app.home')}
-            </button>
-          ) : (
-            <span />
-          )}
+          <div className="flex items-center gap-2">
+            {showHomeButton ? (
+              <button
+                type="button"
+                onClick={handleHomeClick}
+                className="rounded-full border border-black/15 bg-white/80 px-3 py-1.5 text-xs text-ink/70 hover:bg-white md:px-4 md:py-2 md:text-sm"
+              >
+                {t('app.home')}
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={openHistory}
+                className="rounded-full border border-black/15 bg-white/80 px-3 py-1.5 text-xs text-ink/70 hover:bg-white md:px-4 md:py-2 md:text-sm"
+              >
+                {t('history.title')}
+              </button>
+            )}
+          </div>
           <LanguageToggle />
         </div>
 
         <div className={isRanking ? 'min-h-0 flex-1' : ''}>
-          {phase === 'setup' || !selectedSongs ? (
+          {phase === 'history' ? (
+            <HistoryListScreen onOpenRecord={openRecord} />
+          ) : phase === 'historyDetail' && viewingRecordId ? (
+            <HistoryDetailScreen
+              recordId={viewingRecordId}
+              onBack={openHistory}
+              onDeleted={openHistory}
+            />
+          ) : phase === 'setup' || !selectedSongs ? (
             <SetupScreen onStart={handleStart} />
           ) : (
             <CompareScreen

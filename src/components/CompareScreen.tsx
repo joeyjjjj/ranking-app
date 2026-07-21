@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { groupMeta } from '../data/config'
+import { createRankingRecord } from '../data/rankingRecords'
 import { useRankingController } from '../hooks/useRankingController'
 import type { Song } from '../types/song'
 import { ResultScreen } from './ResultScreen'
@@ -15,6 +16,7 @@ export function CompareScreen({ songs, onAgain }: CompareScreenProps) {
   const { t } = useTranslation()
   const { snapshot, choose, draw, undo } = useRankingController(songs)
   const [playingSongId, setPlayingSongId] = useState<string | null>(null)
+  const hasSavedRecord = useRef(false)
 
   const pair = snapshot.currentPair
   const pairKey = pair ? `${pair.left.id}:${pair.right.id}` : ''
@@ -22,6 +24,14 @@ export function CompareScreen({ songs, onAgain }: CompareScreenProps) {
   useEffect(() => {
     setPlayingSongId(null)
   }, [pairKey])
+
+  useEffect(() => {
+    if (!snapshot.isDone || !snapshot.rankedSongs || hasSavedRecord.current) {
+      return
+    }
+    hasSavedRecord.current = true
+    createRankingRecord(snapshot.rankedSongs.map((song) => song.id))
+  }, [snapshot.isDone, snapshot.rankedSongs])
 
   if (snapshot.isDone && snapshot.rankedSongs) {
     return (
